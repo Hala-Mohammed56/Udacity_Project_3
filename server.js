@@ -44,6 +44,6 @@ app.get('/all', (req, res) => {
 /* POST route */
 app.post('/add', (req, res) => {
   const { temperature, date, userResponse } = req.body;
-  projectData = { temperature, date, userResponse }; // Update projectData
+  projectData = { temperature, date, userResponse }; 
   res.send(projectData);
 });
