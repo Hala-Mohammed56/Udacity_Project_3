@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 /* Empty JS object to act as endpoint for all routes */
 let projectData = {};
 
@@ -19,6 +21,14 @@ app.use(cors());
 /* Initialize the main project folder */
 app.use(express.static('website'));
 
+/* Access API key from env*/
+const apiKey = process.env.API_KEY;
+
+
+app.get('/key', (req, res) => {
+  res.send({ key: apiKey });
+});
+
 /* Spin up the server */
 const port = 3000;
 const server = app.listen(port, listening);
@@ -26,15 +36,14 @@ function listening() {
   console.log(`Server is running on localhost: ${port}`);
 }
 
-
-// GET route 
+/* GET route */
 app.get('/all', (req, res) => {
-  res.send(projectData); 
+  res.send(projectData);
 });
 
-// POST route
+/* POST route */
 app.post('/add', (req, res) => {
-  const { temperature, date, userResponse } = req.body; 
-  projectData = { temperature, date, userResponse }; // Update projectData 
-  res.send(projectData); 
+  const { temperature, date, userResponse } = req.body;
+  projectData = { temperature, date, userResponse }; // Update projectData
+  res.send(projectData);
 });
