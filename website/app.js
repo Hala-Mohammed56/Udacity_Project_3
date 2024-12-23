@@ -1,11 +1,20 @@
-// Personal API Key
-const weatherApiKey = 'e18d73a7afec3e6743d8063bd8c17a6b&units=imperial';// did not work with me i try to generate another api but still dose not work
-const weatherApiUrl = 'https://api.openweathermap.org/data/2.5/weather?zip=';
+/* Fetch API Key from Server */
+const fetchApiKey = async () => {
+  try {
+    const response = await fetch('/key');
+    const data = await response.json();
+    return data.key;
+  } catch (error) {
+    console.error('Error fetching API key:', error);
+  }
+};
 
 /* GET Weather Data */
 const getWeatherData = async (zipCode) => {
   try {
-    const response = await fetch(`${weatherApiUrl}${zipCode}&appid=${weatherApiKey}`);
+    const apiKey = await fetchApiKey();
+    const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipCode}&appid=${apiKey}&units=imperial`;
+    const response = await fetch(weatherApiUrl);
     const data = await response.json();
     return data;
   } catch (error) {
